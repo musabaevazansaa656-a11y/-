@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Валентиночка </title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --env-color: #ff85a1;
+            --env-dark: #ff5d8f;
+            --paper-bg: #fffdf9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://i.pinimg.com/originals/03/c3/78/03c378b5b7601c47cae34b069f9e05f6.png') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            position: relative;
+            color: white;
+        }
+
+        h1 { font-family: 'Caveat', cursive; font-size: 2.8rem; color: #fff; margin-bottom: 20px; }
+        p { color: #fff; font-weight: 300; font-size: 1rem; line-height: 1.5; margin-bottom: 25px; }
+
+        .btn {
+            padding: 12px 28px; border: none; border-radius: 50px;
+            font-weight: 600; cursor: pointer; transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .btn-main { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3); }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 77, 109, 0.4); }
+        
+        #btn-no { background: white; color: var(--primary); border: 2px solid var(--primary); margin-left: 10px; position: relative; }
+
+        .envelope-box {
+            position: relative;
+            width: 450px;
+            height: 300px;
+            margin: 150px auto 20px;
+            background: var(--env-dark); 
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 225px solid transparent;
+            border-right: 225px solid transparent;
+            border-top: 160px solid #ff9db4; 
+            transform-origin: top;
+            transition: transform 1.2s ease;
+            z-index: 10;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+        }
+
+        .pocket {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--env-color);
+            clip-path: polygon(0% 0%, 50% 55%, 100% 0%, 100% 100%, 0% 100%);
+            z-index: 8;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .paper {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            width: 410px;
+            height: 270px;
+            background: var(--paper-bg);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 6;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto ;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .paper-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: #4a0a1f;
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 1s 1.2s;
+            text-align: left;
+            padding: 30px 5px;
+            margin: 0;
+        }
+
+        .envelope-box.open .flap {
+            transform: rotateX(180deg);
+            z-index: 4;
+        }
+
+        .envelope-box.open .paper {
+            transform: translateY(-200px);
+            height: 400px;
+            z-index: 11;
+        }
+
+        .envelope-box.open .paper-text { opacity: 1; }
+
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.8s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="main-container fade-in">
+        <span style="font-size: 4rem;">💖</span>
+        <h1>Любимый!</h1>
+        <p>У меня есть маленький секрет для самого лучшего парня в мире... Хочешь узнать?)) </p>
+        <button class="btn btn-main" onclick="nextStep(2)">Да, конечно!</button>
+    </div>
+
+    <div id="step2" class="main-container hidden">
+        <h1>Важный вопрос...</h1>
+        <p>Принимаешь ли ты эту валентинку и мою бесконечную любовь?</p>
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 50px;">
+            <button class="btn btn-main" onclick="nextStep(3)">Конечно, жаным!</button>
+            <button id="btn-no" class="btn">Неа</button>
+        </div>
+    </div>
+
+    <div id="step3" class="main-container hidden" style="background:none; box-shadow:none; backdrop-filter:none;">
+        <h1 style="text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">А это письмо для тебя!</h1>
+        <div class="envelope-box" onclick="this.classList.toggle('open'); fire();">
+            <div class="flap"></div>
+            <div class="paper">
+             <div class="paper-text">
+    <br><br> Мой хороший, спасибо за то, что ты есть! Рядом с тобой я всегда чувствую себя любимой. Я искренне тобой горжусь.
+    Пусть ты и говоришь, что у тебя тяжелый характер, но я знаю, какой ты на самом деле — надежный, заботливый и невероятно нежный со мной.
+    Помни: ты никогда не будешь одинок, пока у тебя есть я. Моё сердце всегда с тобой, где бы ты ни был. Люблю тебя бесконечно сильно, мой масенький! <br><br>
+    Твоя любимая девочка Сая!
+    мурмяукаю
+</div>
+            </div>
+            <div class="pocket"></div>
+        </div>
+        <p style="font-size: 0.9rem; color: #fff; margin-top: 20px;">(Нажми на конверт, чтобы открыть)</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        function nextStep(n) {
+            document.querySelectorAll('.main-container').forEach(c => c.classList.add('hidden'));
+            const el = document.getElementById('step' + n);
+            el.classList.remove('hidden');
+            el.classList.add('fade-in');
+        }
+
+        const no = document.getElementById('btn-no');
+        no.addEventListener('mouseover', () => {
+            const randomX = (Math.random() - 0.5) * 300;
+            const randomY = (Math.random() - 0.5) * 200;
+            no.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+
+        function fire() {
+            if (!document.querySelector('.envelope-box').classList.contains('open')) return;
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff4d6d', '#ffffff', '#ff85a1']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff4d6d', '#ffffff', '#ff85a1']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+</html>
